@@ -49,7 +49,7 @@ post '/blackjack' do
   end
 
   if hit_or_stay == "stay"
-    unless dealer_hand.inject(:+) >= 17
+    until dealer_hand.inject(:+) >= 17
       dealer_hand<<deck.random
     end
   end
@@ -59,6 +59,14 @@ post '/blackjack' do
 
   if sum_of_player_hand > 21
     erb :busted
+  elsif sum_of_dealer_hand > 21
+    erb :win, :locals => {:sum_of_player_hand => sum_of_player_hand, :sum_of_dealer_hand => sum_of_dealer_hand}
+  elsif sum_of_player_hand>sum_of_dealer_hand && sum_of_dealer_hand >= 17
+    erb :win, :locals => {:sum_of_player_hand => sum_of_player_hand, :sum_of_dealer_hand => sum_of_dealer_hand}
+  elsif sum_of_player_hand == sum_of_dealer_hand
+    erb :tie, :locals => {:sum_of_player_hand => sum_of_player_hand, :sum_of_dealer_hand => sum_of_dealer_hand}
+  elsif sum_of_dealer_hand > 17 && sum_of_dealer_hand > sum_of_player_hand
+    erb :lose, :locals => {:sum_of_player_hand => sum_of_player_hand, :sum_of_dealer_hand => sum_of_dealer_hand}
   else
     erb :blackjack, :locals => {:player_hand => player_hand, :dealer_hand => dealer_hand,
                                 :sum_of_player_hand => sum_of_player_hand, :sum_of_dealer_hand => sum_of_dealer_hand }
