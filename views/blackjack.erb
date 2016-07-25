@@ -1,1 +1,10 @@
 <h1>Blackjack time!</h1>
+<h1> You have been dealt <%=player_hand%> </h1>
+<h1> The dealer has drawn <%=dealer_hand%> </h1>
+
+<form action="/blackjack" method="post"/>
+  <input type="radio" name="choice" value="hit"> Hit
+
+  <input type="radio" name="choice" value="stay"> Stay
+
+  <input type="submit"/> 
